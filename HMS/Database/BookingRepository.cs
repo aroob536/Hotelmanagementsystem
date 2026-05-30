@@ -3,7 +3,7 @@ using System.Data.SQLite;
 using HMS.Models;
 
 namespace HMS.Database
-{
+{//Database operations for booking tables
     public class BookingRepository : BaseRepository
     {
         private const string SelectJoin = @"
@@ -23,14 +23,15 @@ namespace HMS.Database
             INNER JOIN Rooms     r ON b.room_id      = r.room_id";
 
         // ── Queries ─────────────────────────────────────────────────────────
+        //get all bookings from latest to old order
         public List<Booking> GetAll() =>
             ExecuteList(SelectJoin + " ORDER BY b.booking_id DESC", MapBooking);
-
+        // get active bookings
         public List<Booking> GetActive() =>
             ExecuteList(SelectJoin +
                 " WHERE b.status IN ('Reserved','Checked-In') ORDER BY b.check_in_date",
                 MapBooking);
-
+        //get booking by id
         public Booking? GetById(int id) =>
             ExecuteSingle(SelectJoin + " WHERE b.booking_id = @id", MapBooking,
                 [new SQLiteParameter("@id", id)]);
@@ -39,7 +40,7 @@ namespace HMS.Database
             ExecuteList(SelectJoin +
                 " WHERE b.customer_id = @cid ORDER BY b.booking_id DESC",
                 MapBooking, [new SQLiteParameter("@cid", customerId)]);
-
+        //get list of check in guest 
         public List<Booking> GetCheckedIn() =>
             ExecuteList(SelectJoin +
                 " WHERE b.status = 'Checked-In' ORDER BY b.check_in_date",

@@ -3,12 +3,12 @@ using System.Data.SQLite;
 using HMS.Models;
 
 namespace HMS.Database
-{
+{//All database operation for customer tables
     public class CustomerRepository : BaseRepository
-    {
+    {// get customers in alphabetical order
         public List<Customer> GetAll() =>
             ExecuteList("SELECT * FROM Customers ORDER BY full_name", MapCustomer);
-
+        // get customer by id
         public Customer? GetById(int id) =>
             ExecuteSingle("SELECT * FROM Customers WHERE customer_id=@id", MapCustomer,
                 [new("@id", id)]);
@@ -20,7 +20,7 @@ namespace HMS.Database
                 "SELECT * FROM Customers WHERE full_name LIKE @q OR phone LIKE @q OR cnic LIKE @q ORDER BY full_name",
                 MapCustomer, [new("@q", like)]);
         }
-
+        //add new customer in database
         public bool Add(Customer c)
         {
             return ExecuteNonQuery(
@@ -34,7 +34,7 @@ namespace HMS.Database
                     new("@dt", DateTime.Now.ToString("o"))
                 ]) > 0;
         }
-
+        //update customer details
         public bool Update(Customer c)
         {
             return ExecuteNonQuery(
@@ -49,11 +49,11 @@ namespace HMS.Database
                     new("@id", c.CustomerId)
                 ]) > 0;
         }
-
+        // delete customer_but if customer has booking then not delete
         public bool Delete(int id) =>
             ExecuteNonQuery("DELETE FROM Customers WHERE customer_id=@id",
                 [new("@id", id)]) > 0;
-
+        // return total count of customers
         public int GetTotalCount() =>
             Convert.ToInt32(ExecuteScalar("SELECT COUNT(*) FROM Customers"));
 
