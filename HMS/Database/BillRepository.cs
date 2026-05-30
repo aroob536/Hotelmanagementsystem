@@ -2,7 +2,7 @@ using System.Data.SQLite;
 using HMS.Models;
 
 namespace HMS.Database
-{
+{//ALL BILL TABLES OPERATIONS 
     public class BillRepository : BaseRepository
     {
         private const string SelectJoin = @"
@@ -17,14 +17,14 @@ namespace HMS.Database
             INNER JOIN Bookings  b ON bl.booking_id = b.booking_id
             INNER JOIN Customers c ON b.customer_id = c.customer_id
             INNER JOIN Rooms     r ON b.room_id      = r.room_id";
-
+//GET ALL BILLS
         public List<Bill> GetAll() =>
             ExecuteList(SelectJoin + " ORDER BY bl.bill_id DESC", MapBill);
-
+//GET ALL BILLS BY ID
         public Bill? GetById(int id) =>
             ExecuteSingle(SelectJoin + " WHERE bl.bill_id=@id", MapBill,
                 [new SQLiteParameter("@id", id)]);
-
+//GET ALL BILLS BY BOOKINGID
         public Bill? GetByBookingId(int bookingId) =>
             ExecuteSingle(SelectJoin + " WHERE bl.booking_id=@bid", MapBill,
                 [new SQLiteParameter("@bid", bookingId)]);
