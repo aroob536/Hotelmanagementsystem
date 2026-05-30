@@ -2,11 +2,13 @@ using System.Data.SQLite;
 
 namespace HMS.Database
 {
+    //Manage SQLite database file path of application
     public static class DbConnection
     {
         private static string _databasePath = string.Empty;
         private static string _connectionString = string.Empty;
 
+        //Build database path
         public static string DatabasePath
         {
             get
@@ -19,7 +21,7 @@ namespace HMS.Database
                 return _databasePath;
             }
         }
-
+        //Manage connection string
         public static string ConnectionString
         {
             get
@@ -29,12 +31,12 @@ namespace HMS.Database
                 return _connectionString;
             }
         }
-
+        //Return new SQLite connection
         public static SQLiteConnection GetConnection()
         {
             return new SQLiteConnection(ConnectionString);
         }
-
+        //Test connection with databse_used for startup check
         public static bool TestConnection()
         {
             try

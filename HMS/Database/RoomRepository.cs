@@ -3,17 +3,18 @@ using System.Data.SQLite;
 using HMS.Models;
 
 namespace HMS.Database
-{
+{// Database operations for all room tables
     public class RoomRepository : BaseRepository
     {
+        //Return all rooms
         public List<Room> GetAll() => ExecuteList("SELECT * FROM Rooms ORDER BY room_number", MapRoom);
-
+        //Return available rooms
         public List<Room> GetAvailable() => ExecuteList("SELECT * FROM Rooms WHERE status='Available' ORDER BY room_number", MapRoom);
-
+        //Return single room using room-id
         public Room? GetById(int id) => ExecuteSingle("SELECT * FROM Rooms WHERE room_id=@id", MapRoom, [new("@id", id)]);
-
+        // return single room using room number
         public Room? GetByNumber(string number) => ExecuteSingle("SELECT * FROM Rooms WHERE room_number=@n", MapRoom, [new("@n", number)]);
-
+        // Add new room to databse
         public bool Add(Room r)
         {
             return ExecuteNonQuery(@"INSERT INTO Rooms(room_number,room_type,floor,price_per_night,capacity,status,description,created_date)
@@ -22,7 +23,7 @@ namespace HMS.Database
                  new("@cp",r.Capacity),new("@st",r.Status),new("@ds",(object?)r.Description??DBNull.Value),
                  new("@dt",DateTime.Now.ToString("o"))]) > 0;
         }
-
+        //Update details of existing room
         public bool Update(Room r)
         {
             return ExecuteNonQuery(@"UPDATE Rooms SET room_number=@rn,room_type=@rt,floor=@fl,price_per_night=@pr,
@@ -31,10 +32,10 @@ namespace HMS.Database
                  new("@cp",r.Capacity),new("@st",r.Status),new("@ds",(object?)r.Description??DBNull.Value),
                  new("@id",r.RoomId)]) > 0;
         }
-
+        // Update status of room_Available/occupied/reserved
         public bool UpdateStatus(int id, string status)
             => ExecuteNonQuery("UPDATE Rooms SET status=@s WHERE room_id=@id", [new("@s", status), new("@id", id)]) > 0;
-
+        //Delete room using id
         public bool Delete(int id) => ExecuteNonQuery("DELETE FROM Rooms WHERE room_id=@id", [new("@id", id)]) > 0;
 
         public DataTable GetSummary()

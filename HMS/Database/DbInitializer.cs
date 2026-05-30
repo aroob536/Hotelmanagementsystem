@@ -3,7 +3,7 @@ using System.Data.SQLite;
 namespace HMS.Database
 {
     public static class DbInitializer
-    {
+    {//Create all tables and default admin + rooms to run on first time
         public static void Initialize()
         {
             string dir = Path.GetDirectoryName(DbConnection.DatabasePath)!;
@@ -16,7 +16,7 @@ namespace HMS.Database
 
             // Enable foreign keys
             Exec(conn, "PRAGMA foreign_keys = ON;");
-
+            //Users table_for login and role based access
             // ── Create tables ────────────────────────────────────────────────
             Exec(conn, @"CREATE TABLE IF NOT EXISTS Users (
                 user_id       INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,7 +29,7 @@ namespace HMS.Database
                 created_date  TEXT NOT NULL,
                 last_login    TEXT
             );");
-
+            //Room table_for record of hotel rooms
             Exec(conn, @"CREATE TABLE IF NOT EXISTS Rooms (
                 room_id         INTEGER PRIMARY KEY AUTOINCREMENT,
                 room_number     TEXT NOT NULL UNIQUE,
@@ -41,7 +41,7 @@ namespace HMS.Database
                 description     TEXT,
                 created_date    TEXT NOT NULL
             );");
-
+            //Customer table_for record of guests
             Exec(conn, @"CREATE TABLE IF NOT EXISTS Customers (
                 customer_id  INTEGER PRIMARY KEY AUTOINCREMENT,
                 full_name    TEXT NOT NULL,
@@ -52,7 +52,7 @@ namespace HMS.Database
                 nationality  TEXT DEFAULT 'Pakistani',
                 created_date TEXT NOT NULL
             );");
-
+            //Booking table_for room reservation
             Exec(conn, @"CREATE TABLE IF NOT EXISTS Bookings (
                 booking_id      INTEGER PRIMARY KEY AUTOINCREMENT,
                 customer_id     INTEGER NOT NULL,
@@ -72,7 +72,7 @@ namespace HMS.Database
                 FOREIGN KEY(customer_id) REFERENCES Customers(customer_id),
                 FOREIGN KEY(room_id)     REFERENCES Rooms(room_id)
             );");
-
+            //Bills table_payment records
             // Bills — NO UNIQUE on booking_id
             Exec(conn, @"CREATE TABLE IF NOT EXISTS Bills (
                 bill_id        INTEGER PRIMARY KEY AUTOINCREMENT,

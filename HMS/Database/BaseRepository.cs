@@ -2,11 +2,11 @@ using System.Data;
 using System.Data.SQLite;
 
 namespace HMS.Database
-{
+{//Base class of all repositories_provide common operations
     public abstract class BaseRepository
     {
         protected SQLiteConnection GetConnection() => DbConnection.GetConnection();
-
+        // Reyurn SQL command that does not return any data
         protected int ExecuteNonQuery(string sql, SQLiteParameter[]? parameters = null)
         {
             using var conn = GetConnection();
@@ -15,7 +15,7 @@ namespace HMS.Database
             if (parameters != null) cmd.Parameters.AddRange(parameters);
             return cmd.ExecuteNonQuery();
         }
-
+        //execute query which return single value
         protected object ExecuteScalar(string sql, SQLiteParameter[]? parameters = null)
         {
             using var conn = GetConnection();
@@ -24,7 +24,7 @@ namespace HMS.Database
             if (parameters != null) cmd.Parameters.AddRange(parameters);
             return cmd.ExecuteScalar()!;
         }
-
+        //Execute query which return multiple values
         protected DataTable ExecuteReader(string sql, SQLiteParameter[]? parameters = null)
         {
             var dt = new DataTable();
@@ -36,7 +36,7 @@ namespace HMS.Database
             adapter.Fill(dt);
             return dt;
         }
-
+        //Return single object_convert row to model using mapper function
         protected T? ExecuteSingle<T>(string sql, Func<SQLiteDataReader, T> mapper, SQLiteParameter[]? parameters = null)
         {
             using var conn = GetConnection();
@@ -46,7 +46,7 @@ namespace HMS.Database
             using var reader = cmd.ExecuteReader();
             return reader.Read() ? mapper(reader) : default;
         }
-
+        //Return list of objects
         protected List<T> ExecuteList<T>(string sql, Func<SQLiteDataReader, T> mapper, SQLiteParameter[]? parameters = null)
         {
             var results = new List<T>();
@@ -58,7 +58,7 @@ namespace HMS.Database
             while (reader.Read()) results.Add(mapper(reader));
             return results;
         }
-
+        // Getter methods used to get private values
         protected string GetString(SQLiteDataReader r, string col)
         {
             int i = r.GetOrdinal(col);
