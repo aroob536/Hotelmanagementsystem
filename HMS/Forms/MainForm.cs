@@ -2,7 +2,7 @@ using HMS.Database;
 using HMS.Models;
 
 namespace HMS.Forms
-{
+{//MAIN DASHBOARD
     public partial class MainForm : Form
     {
         private readonly User               _currentUser;
@@ -21,7 +21,7 @@ namespace HMS.Forms
             SetupClock();
             LoadDashboard();
         }
-
+//SETUP REAL TIME CLOCK_UPDATE EVERY SECOND
         private void SetupClock()
         {
             _clock.Interval = 1000;
@@ -30,7 +30,7 @@ namespace HMS.Forms
             _clock.Start();
             lblClock.Text = DateTime.Now.ToString("dd MMM yyyy   hh:mm:ss tt");
         }
-
+//LOAD DASHBOARD AND ALSO REFRESH ALL STAT CARDS
         public void LoadDashboard()
         {
             try
@@ -61,13 +61,13 @@ namespace HMS.Forms
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+//OPEN CHILD FORM_DASHBOARD GET REFRESHED ON CLOSING
         private void OpenChild(Form frm)
         {
             frm.FormClosed += (s, e) => LoadDashboard();
             frm.Show();
         }
-
+        //BY CLICKING ON SPECIFIC BUTTON SPECIFIC FORM IS OPENED 
         private void btnRooms_Click(object sender, EventArgs e)
             => OpenChild(new RoomManagementForm(_currentUser));
         private void btnCustomers_Click(object sender, EventArgs e)
@@ -80,7 +80,7 @@ namespace HMS.Forms
             => OpenChild(new BillingForm(_currentUser));
         private void btnRefresh_Click(object sender, EventArgs e)
             => LoadDashboard();
-
+//LOGOUT THE FORM AFTER CONFIRMATION
         private void btnLogout_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Logout?", "Confirm",

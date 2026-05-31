@@ -1,5 +1,8 @@
 namespace HMS.Models
-{
+{//User.cs
+    /// <summary>
+    /// System user - to access login and role_based access
+    /// </summary>
     public class User
     {
         public int UserId { get; set; }

@@ -1,5 +1,8 @@
 namespace HMS.Models
-{
+{//Room.cs
+    /// <summary>
+    /// Hotel room - track number, floor, price, and availabilty
+    /// </summary>
     public class Room
     {
         public int RoomId { get; set; }

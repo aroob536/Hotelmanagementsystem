@@ -1,5 +1,8 @@
 namespace HMS.Models
-{
+{//Customer.cs
+/// <summary>
+/// Hotel guest - keep record of contact, details and nationality 
+/// </summary>
     public class Customer
     {
         public int CustomerId { get; set; }

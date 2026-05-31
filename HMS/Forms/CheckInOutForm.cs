@@ -2,7 +2,7 @@ using HMS.Database;
 using HMS.Models;
 
 namespace HMS.Forms
-{
+{//CHECK IN/CHECK OUT OPERATIONS_MANAGE RESERVED OR CHECKED IN GUESTS
     public partial class CheckInOutForm : Form
     {
         private readonly User _user;
@@ -22,7 +22,7 @@ namespace HMS.Forms
             if (tabControl.SelectedIndex == 0) LoadReserved();
             else LoadCheckedIn();
         }
-
+//LOAD RESERVED BOOKINGS
         private void LoadReserved()
         {
             try
@@ -37,7 +37,7 @@ namespace HMS.Forms
             }
             catch { }
         }
-
+//LOAD CHECKED IN GUESTS FOR CHECK OUT
         private void LoadCheckedIn()
         {
             try
@@ -69,7 +69,7 @@ namespace HMS.Forms
             _selected = _bookRepo.GetById(id);
             UpdateDetails(_selected);
         }
-
+//UPDATE DETAILS OF SELECTED BOOKING
         private void UpdateDetails(Booking? b)
         {
             if (b == null) { pnlDetails.Visible = false; return; }
@@ -88,7 +88,7 @@ namespace HMS.Forms
             btnCheckIn.Enabled = b.Status == "Reserved";
             btnCheckOut.Enabled = b.Status == "Checked-In";
         }
-
+//ROOM STATUS OCCUPIED WHEN CUSTOMER CHECKED IN
         private void btnCheckIn_Click(object sender, EventArgs e)
         {
             if (_selected == null || _selected.Status != "Reserved") return;
@@ -102,7 +102,7 @@ namespace HMS.Forms
                 LoadReserved(); LoadCheckedIn();
             }
         }
-
+//Room AVAILABLE WHEN CUSTOMER CHECKED OUT
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
             if (_selected == null || _selected.Status != "Checked-In") return;

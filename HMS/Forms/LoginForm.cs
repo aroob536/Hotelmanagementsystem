@@ -2,7 +2,7 @@ using HMS.Database;
 using HMS.Models;
 
 namespace HMS.Forms
-{
+{//LOGIN FORM_OPEN MAINFORM BY VERIFYING USERNAME AND PASSWORD
     public partial class LoginForm : Form
     {
         private readonly UserRepository _users = new();
@@ -11,7 +11,7 @@ namespace HMS.Forms
         {
             InitializeComponent();
         }
-
+//LOGIN BUTTON CLICK_AUTHENTICATE CREDENTIALS
         private void btnLogin_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtUsername.Text))
@@ -42,7 +42,7 @@ namespace HMS.Forms
         }
 
         private void btnExit_Click(object sender, EventArgs e) => Application.Exit();
-
+        //SHOW CONFIRM DIALOG ON CLOSING FORM
         private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -51,7 +51,7 @@ namespace HMS.Forms
                     e.Cancel = true;
             }
         }
-
+        //BY ENTERING PASSWORD IN PASSWORD FIELD ALSO TRIGGER LOGIN
         private void txtPassword_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) btnLogin_Click(sender, e);

@@ -1,5 +1,10 @@
 namespace HMS.Models
-{
+{//Booking.cs
+    /// <summary>
+    /// Room reservation_track check in/check out dates, status and payment
+    /// In night property_keep record of nights stay and check in/check out difference
+    /// In balance property_reduce paid amount from total amount, remaining balance
+    /// </summary>
     public class Booking
     {
         public int BookingId { get; set; }

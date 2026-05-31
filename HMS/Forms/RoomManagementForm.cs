@@ -2,7 +2,7 @@ using HMS.Database;
 using HMS.Models;
 
 namespace HMS.Forms
-{
+{//ROOM MANAGEMENT_ADD/DELETE/UPDATE OR DISPLAY ROOMS
     public partial class RoomManagementForm : Form
     {
         private readonly User _user;
@@ -15,7 +15,7 @@ namespace HMS.Forms
             InitializeComponent();
             LoadRooms();
         }
-
+//LOAD ALL ROOMS FROM DATABASE
         private void LoadRooms()
         {
             try
@@ -29,14 +29,14 @@ namespace HMS.Forms
             }
             catch (Exception ex) { MessageBox.Show("Error loading rooms: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
-
+//CLEAR FORM FIELDS_RETURN TO ADD MODE
         private void ClearForm()
         {
             txtRoomNumber.Clear(); cmbType.SelectedIndex = 0; nudFloor.Value = 1;
             nudPrice.Value = 3500; nudCapacity.Value = 2; cmbStatus.SelectedIndex = 0;
             txtDescription.Clear(); _selected = null; btnSave.Text = "Add Room";
         }
-
+//FIELDS GET FILLED ON SELECTING ROOMS IN GRID
         private void dgvRooms_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvRooms.CurrentRow == null) return;
@@ -52,7 +52,7 @@ namespace HMS.Forms
             txtDescription.Text = _selected.Description ?? "";
             btnSave.Text = "Update Room";
         }
-
+//SAVE ROOMS_IF NEW THEN ADD,IF SELECTED THEN UPDATE
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtRoomNumber.Text))
@@ -85,7 +85,7 @@ namespace HMS.Forms
             if (!ok) MessageBox.Show("Operation failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             ClearForm(); LoadRooms();
         }
-
+        //DELEYE THE SELECTED ROOM
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (_selected == null) { MessageBox.Show("Select a room first.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information); return; }
@@ -101,7 +101,7 @@ namespace HMS.Forms
 
         private void btnClear_Click(object sender, EventArgs e) => ClearForm();
         private void btnRefresh_Click(object sender, EventArgs e) => LoadRooms();
-
+        //BY TYPING IN SEARCH BOX REAL TIME FILTER OCCUR IN GRID
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             string q = txtSearch.Text.ToLower();

@@ -2,7 +2,7 @@ using HMS.Database;
 using HMS.Models;
 
 namespace HMS.Forms
-{
+{//CUSTOMER DETAILS_ADD/DELETE/UPDATE CUSTOMERS
     public partial class CustomerForm : Form
     {
         private readonly User _user;
@@ -15,7 +15,7 @@ namespace HMS.Forms
             InitializeComponent();
             LoadCustomers();
         }
-
+//LOAD CUSTOMERS_CAN ALSO FILTER FROM SEARCH PARAMETER
         private void LoadCustomers(string search = "")
         {
             try
@@ -42,7 +42,7 @@ namespace HMS.Forms
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+//CLEAR THE DETAILS IN FORM
         private void ClearForm()
         {
             txtName.Clear();
@@ -72,7 +72,7 @@ namespace HMS.Forms
 
             btnSave.Text = "Update Customer";
         }
-
+//SAVE THE RECORD_IF NEW THEN ADD,IF SELECTED THEN UPDATE
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtName.Text))
@@ -115,7 +115,7 @@ namespace HMS.Forms
             ClearForm();
             LoadCustomers();
         }
-
+//DELETE THE SELECTED CUSTOMER
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (_selected == null)
@@ -138,9 +138,9 @@ namespace HMS.Forms
                 LoadCustomers();
             }
         }
-
+//CLEAR THE RECORD OF SELECTED CUSTOMER
         private void btnClear_Click(object sender, EventArgs e) => ClearForm();
-
+//SEARCH BUTTON_SEARCH CUSTOMER THROUGH ID,NAME AND CNIC
         private void btnSearch_Click(object sender, EventArgs e)
             => LoadCustomers(txtSearch.Text.Trim());
 

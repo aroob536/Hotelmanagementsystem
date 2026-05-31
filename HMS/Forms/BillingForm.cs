@@ -2,7 +2,7 @@ using HMS.Database;
 using HMS.Models;
 
 namespace HMS.Forms
-{
+{//MANAGE BILLS_CREATE BILLS OF CHECK OUT BOOKING
     public partial class BillingForm : Form
     {
         private readonly User              _user;
@@ -128,7 +128,7 @@ namespace HMS.Forms
             RecalcTotal();
         }
 
-        // ── Recalc ───────────────────────────────────────────────────────────
+        // ── Recalc ROOM CHARGES+EXTRA+TAX-DISCOUNT = CALCULATE TOTAL───────────────────────────────────────────────────────────
         private void RecalcTotal()
         {
             if (_loading) return;
@@ -260,7 +260,7 @@ namespace HMS.Forms
             }
             ShowReceipt(_selectedBill);
         }
-
+//SHOW RECEIPT
         private void ShowReceipt(Bill b)
         {
             Booking? booking = null;
@@ -333,7 +333,7 @@ Payment       : {b.PaymentMethod}
             frm.ShowDialog();
         }
 
-        // ── Delete ───────────────────────────────────────────────────────────
+        // ── Delete bill ───────────────────────────────────────────────────────────
         private void btnDeleteBill_Click(object sender, EventArgs e)
         {
             if (_selectedBill == null)
@@ -353,7 +353,7 @@ Payment       : {b.PaymentMethod}
             }
         }
 
-        // ── Clear / Refresh ──────────────────────────────────────────────────
+        // ── Clear the details of bill / Refresh ──────────────────────────────────────────────────
         private void ClearFields()
         {
             _loading = true;

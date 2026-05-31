@@ -2,7 +2,7 @@ using HMS.Database;
 using HMS.Models;
 
 namespace HMS.Forms
-{
+{//BOOKING MANAGEMENT_ADD/UPDATE/DELETE
     public partial class BookingForm : Form
     {
         private readonly User _user;
@@ -18,7 +18,7 @@ namespace HMS.Forms
             LoadCombos();
             LoadBookings();
         }
-
+//FILL CUSTOMER AND ROOM DROPDOWNS FROM DATABASE
         private void LoadCombos()
         {
             cmbCustomer.Items.Clear();
@@ -53,7 +53,7 @@ namespace HMS.Forms
             }
             catch (Exception ex) { MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
-
+//CALCULATE TOTAL NUMBER ACCORDING TO ROOM AND DATES
         private void CalculateTotal()
         {
             if (cmbRoom.SelectedItem is not ComboItem ci) return;
@@ -64,7 +64,7 @@ namespace HMS.Forms
             lblTotal.Text = $"Total: Rs. {total:N0}  ({nights} nights × Rs. {room.PricePerNight:N0})";
             txtTotalAmount.Text = total.ToString("N0");
         }
-
+//CLEAR THE DETAILS
         private void ClearForm()
         {
             if (cmbCustomer.Items.Count > 0) cmbCustomer.SelectedIndex = 0;
@@ -124,7 +124,7 @@ namespace HMS.Forms
             string clean = tb.Text.Replace(",", "").Replace("Rs.", "").Trim();
             return decimal.TryParse(clean, out var v) ? v : 0m;
         }
-
+//SAVE BOOKING_IF NEW THEN ADD, IF SELECTED THEN UPDATE
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (cmbCustomer.SelectedItem is not ComboItem cust)
@@ -177,7 +177,7 @@ namespace HMS.Forms
             ClearForm();
             LoadBookings();
         }
-
+//CANCEL THE SELECTED BOOKING
         private void btnCancelBooking_Click(object sender, EventArgs e)
         {
             if (_selected == null)

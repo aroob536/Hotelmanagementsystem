@@ -1,5 +1,9 @@
 namespace HMS.Models
-{
+{//Bill.cs
+    /// <summary>
+    /// Payment record_manage room charges,tax,discount and payment method
+    /// In balance property_differ between total or paid - outstanding amount
+    /// </summary>
     public class Bill
     {
         public int BillId { get; set; }
